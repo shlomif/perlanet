@@ -37,6 +37,12 @@ has 'tidy' => (
   lazy_build => 1
 );
 
+=head2 TIDY_WARNING
+
+For internal use.
+
+=cut
+
 sub _build_tidy {
   my $self = shift;
   my %tidy = (

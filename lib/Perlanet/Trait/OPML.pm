@@ -24,6 +24,10 @@ Generates an OPML file of all feeds that are being aggregated by the planet.
 
 An L<XML::OPML::SimpleGen> object to generate the XML for the OPML file
 
+=head2 LC_ALL
+
+For internal use.
+
 =cut
 
 has 'opml_generator' => (

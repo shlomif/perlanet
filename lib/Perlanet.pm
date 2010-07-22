@@ -11,7 +11,6 @@ use DateTime::Duration;
 use DateTime;
 use Perlanet::Entry;
 use Perlanet::Feed;
-use TryCatch;
 use URI::Fetch;
 use XML::Feed;
 
@@ -164,7 +163,7 @@ sub fetch_feeds {
 
     next if $response->is_error;
 
-    try {
+    eval {
       my $data = $response->content;
       my $xml_feed = XML::Feed->parse(\$data);
 
@@ -172,11 +171,12 @@ sub fetch_feeds {
       $feed->title($xml_feed->title) unless $feed->title;
 
       push @valid_feeds, $feed;
+    };
+
+    if ($@) {
+      carp 'Errors parsing ' . $feed->url;
     }
-      catch {
-        carp 'Errors parsing ' . $feed->url;
-      }
-    }
+  }
 
   return @valid_feeds;
 }
